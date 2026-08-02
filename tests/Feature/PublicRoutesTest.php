@@ -29,8 +29,15 @@ class PublicRoutesTest extends TestCase
         $this->get('/blog/employee-transportation-best-practices')->assertOk();
     }
 
-    public function test_admin_requires_login(): void
+    public function test_admin_routes_are_removed(): void
     {
-        $this->get('/admin')->assertRedirect('/admin/login');
+        $this->get('/admin')->assertNotFound();
+        $this->get('/admin/login')->assertNotFound();
+        $this->get('/admin/leads')->assertNotFound();
+        $this->get('/admin/content/vehicles')->assertNotFound();
+
+        $adminRoutes = collect(app('router')->getRoutes())->filter(fn ($route) => str_starts_with($route->uri(), 'admin'));
+
+        $this->assertCount(0, $adminRoutes);
     }
 }

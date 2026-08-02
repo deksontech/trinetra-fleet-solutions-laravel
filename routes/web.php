@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ContentController;
-use App\Http\Controllers\Admin\LeadController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -38,12 +34,3 @@ Route::middleware('throttle:120,1')->group(function () {
 Route::post('/request-a-quote', [FormController::class, 'quote'])->middleware('throttle:8,1')->name('forms.quote');
 Route::post('/contact', [FormController::class, 'contact'])->middleware('throttle:8,1')->name('forms.contact');
 Route::post('/careers/apply', [FormController::class, 'career'])->middleware('throttle:6,1')->name('forms.career');
-
-Route::get('/admin/login', [AuthController::class, 'login'])->middleware('guest')->name('admin.login');
-Route::post('/admin/login', [AuthController::class, 'authenticate'])->middleware('guest', 'throttle:5,1')->name('admin.authenticate');
-Route::post('/admin/logout', [AuthController::class, 'logout'])->middleware('auth')->name('admin.logout');
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
-    Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
-    Route::get('/content/{module}', [ContentController::class, 'index'])->name('content.index');
-});

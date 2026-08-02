@@ -294,9 +294,4 @@ class TrinetraData
     {
         return ['Fleet Gallery', 'Event Gallery', 'Corporate Transportation Gallery', 'Wedding Transportation Gallery', 'Airport Transfer Gallery', 'Video Gallery'];
     }
-
-    public static function adminModules(): array
-    {
-        return ['Dashboard', 'Leads', 'Fleet Categories', 'Vehicles', 'Services', 'Locations', 'Tours', 'Client Logos', 'Testimonials', 'Gallery', 'Videos', 'Careers', 'Job Applications', 'Blogs', 'Blog Categories', 'FAQs', 'Legal Pages', 'SEO Settings', 'Website Settings', 'Contact Details', 'Admin Users', 'Roles and Permissions', 'Audit Logs'];
-    }
 }

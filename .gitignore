@@ -20,6 +20,7 @@ database/*.sqlite-*
 *.log
 *.cache
 .phpunit.result.cache
+.codex_build/
 /.idea/
 /.vscode/
 Thumbs.db

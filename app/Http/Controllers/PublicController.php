@@ -37,7 +37,7 @@ class PublicController extends Controller
     public function legal(string $slug): View { return view('pages.legal', $this->base() + ['page' => LegalPage::where('slug', $slug)->firstOrFail()]); }
     public function success(string $reference): View { return view('pages.success', $this->base() + ['reference' => $reference]); }
     public function sitemapPage(): View { return view('pages.sitemap-page', $this->base() + ['links' => $this->links()]); }
-    public function robots(): Response { return response("User-agent: *\nAllow: /\nDisallow: /admin\nSitemap: ".url('/sitemap.xml')."\n", 200, ['Content-Type' => 'text/plain']); }
+    public function robots(): Response { return response("User-agent: *\nAllow: /\nSitemap: ".url('/sitemap.xml')."\n", 200, ['Content-Type' => 'text/plain']); }
     public function sitemapXml(): Response
     {
         return response()->view('pages.sitemap-xml', $this->base() + ['links' => $this->links()])->header('Content-Type', 'application/xml');

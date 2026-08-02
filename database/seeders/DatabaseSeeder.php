@@ -9,30 +9,20 @@ use App\Models\FAQ;
 use App\Models\GalleryCategory;
 use App\Models\LegalPage;
 use App\Models\Location;
-use App\Models\Role;
 use App\Models\Service;
 use App\Models\SiteSetting;
-use App\Models\User;
 use App\Models\Vehicle;
 use App\Models\VehicleCategory;
 use App\Models\VehicleImage;
 use App\Models\Tour;
 use App\Support\TrinetraData;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $role = Role::firstOrCreate(['name' => 'Administrator']);
-        $admin = User::updateOrCreate(
-            ['email' => env('ADMIN_EMAIL', 'admin@trinetrafleet.com')],
-            ['name' => 'Admin User', 'password' => Hash::make(env('ADMIN_PASSWORD', 'ChangeMeBeforeLaunch!'))]
-        );
-        $admin->roles()->syncWithoutDetaching([$role->id]);
-
         foreach (TrinetraData::services() as $service) {
             Service::updateOrCreate(['slug' => $service['slug']], [
                 'title' => $service['title'],
