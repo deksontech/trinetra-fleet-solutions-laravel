@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('title',$tour->title.' | '.$site['name'])
+@section('content')
+<x-hero :title="$tour->title" eyebrow="Tour enquiry" :image="$images['road']">{{ $tour->summary }}</x-hero>
+<x-section title="Tour Details"><div class="grid gap-8 lg:grid-cols-[1fr_420px]"><div class="grid gap-5">@foreach([['Suggested Itinerary',$tour->itinerary ?? []],['Pickup Locations',['Delhi NCR','Hotel','Airport','Custom pickup as quoted']],['Duration',[$tour->duration]],['Recommended Vehicles',collect($fleetCategories)->take(6)->pluck('name')->all()],['Passenger Suitability',['Families','Tourists','Corporate guests','Small and large groups']],['Inclusions',$tour->inclusions ?? []],['Exclusions',$tour->exclusions ?? []],['Important Notes',$tour->notes ?? []],['Best Time to Travel',['Subject to route, weather and itinerary review']]] as [$title,$items])<section class="rounded border border-slate-200 bg-white p-6"><h2 class="text-xl font-semibold text-navy">{{ $title }}</h2><ul class="mt-3 grid gap-2 text-steel">@foreach($items as $item)<li>• {{ $item }}</li>@endforeach</ul></section>@endforeach</div>@include('forms.quick-enquiry',['compact'=>true,'defaultService'=>'Outstation Cab Service'])</div></x-section>
+@endsection

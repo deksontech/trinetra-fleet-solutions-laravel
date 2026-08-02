@@ -1,0 +1,8 @@
+@extends('layouts.app')
+@section('title',$vehicle->name.' | '.$site['name'])
+@push('schema')<script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'Vehicle','name'=>$vehicle->name,'vehicleSeatingCapacity'=>$vehicle->passenger_capacity]) !!}</script>@endpush
+@section('content')
+<x-hero :title="$vehicle->name" eyebrow="Vehicle details" :image="$vehicle->image">{{ $vehicle->disclaimer }}</x-hero>
+<x-section title="Vehicle Overview"><div class="grid gap-8 lg:grid-cols-[1fr_0.8fr]"><div class="rounded border border-slate-200 bg-white p-6"><dl class="grid gap-4 md:grid-cols-2">@foreach(['Category'=>optional($vehicle->category)->name,'Passengers'=>$vehicle->passenger_capacity,'Luggage'=>$vehicle->luggage_capacity,'Transmission'=>$vehicle->transmission,'Fuel'=>$vehicle->fuel_type] as $k=>$v)<div><dt class="font-semibold text-navy">{{ $k }}</dt><dd class="text-steel">{{ $v }}</dd></div>@endforeach</dl><h2 class="mt-8 text-xl font-semibold text-navy">Key Features</h2><ul class="mt-3 grid gap-2 text-steel">@foreach($vehicle->features ?? [] as $f)<li>• {{ $f }}</li>@endforeach</ul></div><div class="rounded border border-slate-200 bg-white p-6"><h2 class="text-xl font-semibold text-navy">Suitable Services</h2><p class="mt-3 text-steel">{{ implode(', ', $vehicle->suitable_services ?? []) }}</p><a href="{{ route('quote',['vehicle'=>$vehicle->slug]) }}" class="mt-6 inline-block rounded bg-gold px-5 py-3 font-semibold text-white">Request Quote</a></div></div></x-section>
+<x-section title="Similar Vehicles"><div class="grid gap-5 md:grid-cols-3">@foreach($similar as $item)<x-fleet-card :vehicle="$item" />@endforeach</div></x-section>
+@endsection

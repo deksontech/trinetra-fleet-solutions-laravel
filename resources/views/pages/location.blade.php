@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title',$location->name.' Transport Services | '.$site['name'])
+@push('schema')<script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'LocalBusiness','name'=>$site['name'].' '.$location->name,'areaServed'=>$location->name]) !!}</script>@endpush
+@section('content')
+<x-hero :title="$location->name.' Corporate Transport and Fleet Solutions'" eyebrow="City page" :image="$images['road']">{{ $location->summary }}</x-hero>
+<x-section title="Available in {{ $location->name }}"><div class="grid gap-8 lg:grid-cols-[1fr_420px]"><div class="grid gap-5">@foreach([['Available Services',$servicesList->take(10)->pluck('title')->all()],['Available Fleet Categories',collect($fleetCategories)->pluck('name')->all()],['Airport and Railway Transfers',[$location->name.' airport pickup',$location->name.' airport drop','Guest placard and meet-and-greet where configured','Railway station movement']],['Nearby Business Hubs',$location->hubs ?? []],['Popular Routes',$location->routes ?? []],['Industries Served',array_slice($industries,0,10)]] as [$title,$items])<section class="rounded border border-slate-200 bg-white p-6"><h2 class="text-xl font-semibold text-navy">{{ $title }}</h2><ul class="mt-3 grid gap-2 text-steel">@foreach($items as $item)<li>• {{ $item }}</li>@endforeach</ul></section>@endforeach</div>@include('forms.quick-enquiry',['compact'=>true])</div></x-section>
+@endsection
